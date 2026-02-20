@@ -7,7 +7,27 @@
 <body>
     <h1>ようこそ</h1>
     <p>営業写真一覧</p>
-    <img src="img_001.jpg" alt="テスト画像" width="300">
-    <img src="img_002.jpg" alt="テスト画像" width="300">
+
+    <div id="image-container">
+        </div>
+
+    <script>
+        const container = document.getElementById('image-container');
+        
+        // 1から31までループ
+        for (let i = 1; i <= 31; i++) {
+            // 数値を3桁の文字列に変換（例: 1 -> "001"）
+            const fileName = String(i).padStart(3, '0');
+            
+            // img要素を作成
+            const img = document.createElement('img');
+            img.src = `img_${fileName}.jpg`;
+            img.alt = `営業写真_${fileName}`;
+            img.width = 300;
+            
+            // コンテナに追加
+            container.appendChild(img);
+        }
+    </script>
 </body>
 </html>
