@@ -1,21 +1,50 @@
-<script>
-    fetch('manifest.json')
-        .then(res => res.json())
-        .then(files => {
-            const container = document.getElementById('image-container'); // ← 中に移動
-            
-            if (!container) {
-                console.error('image-containerが見つかりません');
-                return;
-            }
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar未完 営業写真</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+        }
+        #image-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        #image-container img {
+            width: 300px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>ようこそ</h1>
+    <p>営業写真一覧</p>
 
-            files.forEach(fileName => {
-                const img = document.createElement('img');
-                img.src = fileName;
-                img.alt = fileName;
-                img.width = 300;
-                container.appendChild(img);
-            });
-        })
-        .catch(err => console.error('manifest.json の取得失敗:', err));
-</script>
+    <div id="image-container"></div>  <!-- ← これが抜けていました -->
+
+    <script>
+        fetch('manifest.json')
+            .then(res => res.json())
+            .then(files => {
+                const container = document.getElementById('image-container');
+
+                if (!container) {
+                    console.error('image-containerが見つかりません');
+                    return;
+                }
+
+                files.forEach(fileName => {
+                    const img = document.createElement('img');
+                    img.src = fileName;
+                    img.alt = fileName;
+                    container.appendChild(img);
+                });
+            })
+            .catch(err => console.error('manifest.json の取得失敗:', err));
+    </script>
+</body>
+</html>
