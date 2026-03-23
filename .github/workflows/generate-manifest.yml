@@ -1,0 +1,19 @@
+name: Generate Image Manifest
+on:
+  push:
+    paths:
+      - 'img_*.jpg'   # 画像が変わったときだけ実行
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate manifest.json
+        run: |
+          ls img_*.jpg 2>/dev/null \
+            | sort \
+            | python3 -c "import sys,json; print(json.dumps(sys.stdin.read().split()))" \
+            > manifest.json
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: update manifest.json'
